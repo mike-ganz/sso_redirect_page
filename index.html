@@ -1,18 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Redirect Page</title>
+    <title>Orderly Redirect Page</title>
+    <script type="text/javascript">
+        window.onload = function() {
+            // 1. Extract code from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+
+            if (code) {
+                // 2. Send code to API
+                fetch('https://x8ki-letl-twmt.n7.xano.io/api:sC7KfsJ5/google_oauth_codes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ code: code }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+
+                    // 3. Close the window after API successfully receives the code
+                    window.close();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    // Handle API error as needed
+                });
+            } else {
+                console.error('No code parameter found in URL');
+                // Handle missing code parameter as needed
+                // For example, display an error message to the user or redirect to an error page
+            }
+        };
+    </script>
 </head>
 <body>
-  <h1>Redirecting...</h1>
-  <script>
-    // Parse the current URL
-    var url = new URL(window.location.href);
-
-    // Get the 'code' parameter
-    var code = url.searchParams.get('code');
-
-    // TODO: Send 'code' to your Adalo app
-  </script>
+    Sending code to API...
 </body>
 </html>
