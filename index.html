@@ -14,7 +14,7 @@
             const code = urlParams.get('code');
             const state = urlParams.get('state');
 
-            if (code && state && state.startsWith("G-")) {
+            if (code && state && !state.startsWith("M-")) {
                 // 2. Send code to API
                 fetch('https://xlw5-kd1n-crdj.n7c.xano.io/api:sC7KfsJ5/google_oauth_codes', {
                     method: 'POST',
