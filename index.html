@@ -14,7 +14,7 @@
             const code = urlParams.get('code');
             const state = urlParams.get('state');
 
-            if (code && state) {
+            if (code && state && state.startsWith("G-")) {
                 // 2. Send code to API
                 fetch('https://xlw5-kd1n-crdj.n7c.xano.io/api:sC7KfsJ5/google_oauth_codes', {
                     method: 'POST',
@@ -34,10 +34,30 @@
                     console.error('Error:', error);
                     // Handle API error as needed
                 });
-            } else {
+            } else if (code && state && state.startsWith("M-")) {
+                fetch('https://xlw5-kd1n-crdj.n7c.xano.io/api:nC-c_soR/microsoft_oauth_codes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ code: code, state_parameter: state }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+
+                    // 3. Close the window after API successfully receives the code
+                    window.close();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    // Handle API error as needed
+                });
+
+            } 
+            
+            else {
                 console.error('No code parameter found in URL');
-                // Handle missing code parameter as needed
-                // For example, display an error message to the user or redirect to an error page
             }
         };
     </script>
